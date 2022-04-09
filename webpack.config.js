@@ -1,11 +1,25 @@
 const path = require('path')
 
 module.exports = {
+  /**
+   * * 入口文件 支持字符串、数组、对象、函数
+   * * 单入口 chunk name 默认为 main
+   * * vendor: ['react', 'react-dom'] 支持第三方公共模块提取
+   */
   entry: './src/index.js',
+
+  /**
+   * * 资源配置出口
+   * * filename: 输出资源文件名 支持模板语法[hash] [chunkhash][id][query]
+   * * path: 必须绝对路径
+   * * publicPath: 指定资源的请求位置
+   */
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, '/dist')
+    filename: '[name]@[hash].js',
+    path: path.join(__dirname, '/dist'),
   },
+
+
   mode: 'development',
 
   // 配置 webpack-dev-server:
