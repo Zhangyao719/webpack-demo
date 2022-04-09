@@ -1,5 +1,4 @@
 const path = require('path')
-// import path from 'path'
 
 module.exports = {
   entry: './src/index.js',
@@ -12,9 +11,10 @@ module.exports = {
   // 配置 webpack-dev-server:
   devServer: {
       publicPath: '/dist/',
+      open: true, // 自动打开浏览器
+      port: 8888, // 设置启动时的运行端口
+      // hot: true,
     // compress: true,
-    // open: true,
-    // hot: true,
 
 
     // webpack5中访问静态资源的配置 必须放在static对象中:
