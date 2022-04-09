@@ -12,11 +12,13 @@ module.exports = {
    * * 资源配置出口
    * * filename: 输出资源文件名 支持模板语法[hash] [chunkhash][id][query]
    * * path: 必须绝对路径
-   * * publicPath: 指定资源的请求位置
+   * * publicPath: js引入资源的路径
    */
   output: {
-    filename: '[name]@[hash].js',
+    // filename: '[name]@[hash].js',
+    filename: 'bundle.js',
     path: path.join(__dirname, '/dist'),
+    publicPath: './public/',
   },
 
 
@@ -53,6 +55,7 @@ module.exports = {
    */
   module: {
     rules: [
+      // * css-loader / style-loader
       // 写法一:
       // {
       //   test: /\.css$/,
@@ -71,12 +74,74 @@ module.exports = {
           exclude: /node_modules/,
         }
       },
+
+      // * eslint-loader
       // eslint 使用enforce: 'pre'强制提前执行
       // {
       //   test: /\.js$/,
       //   use: 'eslint-loader',
       //   enforce: 'pre',
       // }
+
+      // * babel-loader
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true, // 启用缓存机制
+            presets: [
+              // 禁止将esModule转为CommonJS(否则会导致tree-shaking特效失效)
+              ['@babel/preset-env', { modules: false }]
+            ]
+          }
+        }
+      },
+
+      // * ts-loader (通过typescript和ts-loader 可以实现代码类型的检查)
+      // {
+      //   test: /\.ts$/,
+      //   use: 'ts-loader',
+      // },
+
+      // * html-loader 将HTML文件转化为字符串并进行格式化, 让js加载
+      {
+        test: /\.html$/,
+        use: 'html-loader',
+      },
+
+      /**
+       *  * file-loader
+       * * 可以在js中加载png|jpg|jpeg|gif图片资源
+       */
+      // {
+      //   test: /\.(png|jpg|jpeg|gif)$/,
+      //   use: {
+      //     loader: 'file-loader',
+      //     // 支持配置文件名、publicPath(会覆盖原有的output.publicPath)
+      //     options: {
+      //       name: '[name].[ext]',
+      //       publicPath: './public'
+      //     }
+      //   },
+      // },
+
+      /**
+       * * url-loader
+       * * 可以设置阈值, 超过阈值 生成publicPath, 小于阈值 返回文件base64形式编码
+       */
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]',
+            publicPath: './public',
+            limit: 1024,
+          }
+        },
+      },
     ]
   }
 }
