@@ -1,5 +1,4 @@
 import add from './add-content.js'
-
-console.log('index.js')
+import './style/base.css'
 
 add()
