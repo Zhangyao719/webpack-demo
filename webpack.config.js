@@ -38,5 +38,38 @@ module.exports = {
     //   *可通过`http://localhost:8080${publicPath}/bundle.js` 访问到该静态资源
     //   publicPath: '/dist',
     // },
+  },
+
+  /**
+   * * 与loader相关的配置都在module对象中
+   * * rules代表了模块的处理规则
+   * * test: 可接受正则表达式, 匹配成功的模块会使用这条规则
+   * * use: 可接受数组 包含该规则所使用的loader
+   * * exclude: 排除某些模块 不执行此规则 (优先级高于include)
+   * * include: 包含某些模块
+   * * resource: 被加载模块 (test、exclude、include本质上属于对resource的配置)
+   * * issuer: 加载者
+   */
+  module: {
+    rules: [
+      // 写法一:
+      // {
+      //   test: /\.css$/,
+      //   use: ['style-loader', 'css-loader'],
+      //   exclude: /node_modules/, // 必加项
+      // }
+      // 写法二:
+      {
+        use: ['style-loader', 'css-loader'],
+        resource: {
+          test: /\.css$/,
+          exclude: /node_modules/,
+        },
+        issuer: {
+          test: /\.js$/,
+          exclude: /node_modules/,
+        }
+      }
+    ]
   }
 }
