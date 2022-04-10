@@ -142,6 +142,17 @@ module.exports = {
           }
         },
       },
+
+      // 安装自定义loader
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'force-strict-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+      },
     ]
   }
 }
