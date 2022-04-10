@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack=require("webpack") // 启用热重载的第一步 - 导入webpack模块
 
 module.exports = {
   /**
@@ -29,7 +30,7 @@ module.exports = {
       publicPath: '/dist/',
       open: true, // 自动打开浏览器
       port: 8888, // 设置启动时的运行端口
-      // hot: true,
+      hot: true, // 启用热重载的第二步
     // compress: true,
 
 
@@ -154,5 +155,10 @@ module.exports = {
         },
       },
     ]
-  }
+  },
+
+  plugins:[
+    // 启用热重载的第三步 - 创建一个热重载的模块对象
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }
