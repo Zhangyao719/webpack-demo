@@ -1,5 +1,6 @@
 const path = require('path')
-const webpack=require("webpack") // 启用热重载的第一步 - 导入webpack模块
+const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
+const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
 
 module.exports = {
   /**
@@ -17,7 +18,8 @@ module.exports = {
    */
   output: {
     // filename: '[name]@[hash].js',
-    filename: 'bundle.js',
+    // filename: 'bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, '/dist'),
     publicPath: './public/',
   },
@@ -64,17 +66,17 @@ module.exports = {
       //   exclude: /node_modules/, // 必加项
       // }
       // 写法二:
-      {
-        use: ['style-loader', 'css-loader'],
-        resource: {
-          test: /\.css$/,
-          exclude: /node_modules/,
-        },
-        issuer: {
-          test: /\.js$/,
-          exclude: /node_modules/,
-        }
-      },
+      // {
+      //   use: ['style-loader', 'css-loader'],
+      //   resource: {
+      //     test: /\.css$/,
+      //     exclude: /node_modules/,
+      //   },
+      //   issuer: {
+      //     test: /\.js$/,
+      //     exclude: /node_modules/,
+      //   }
+      // },
 
       // * eslint-loader
       // eslint 使用enforce: 'pre'强制提前执行
@@ -154,11 +156,32 @@ module.exports = {
           }
         },
       },
+
+      // 启用分离样式第二步
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            },
+          },
+          'css-loader',
+        ]
+      }
     ]
   },
 
   plugins:[
     // 启用热重载的第三步 - 创建一个热重载的模块对象
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+
+    // 启用分离样式第三步
+    // filename: 同步加载的css资源名，chunkFilename：异步加载的css资源名
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    })
   ]
 }
