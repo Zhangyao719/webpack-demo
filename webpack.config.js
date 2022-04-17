@@ -58,7 +58,7 @@ module.exports = {
    */
   module: {
     rules: [
-      // * css-loader / style-loader
+      // * css-loader / style-loader (mini-css-extract-plugin 替代)
       // 写法一:
       // {
       //   test: /\.css$/,
@@ -146,7 +146,7 @@ module.exports = {
         },
       },
 
-      // 安装自定义loader
+      // * 安装自定义loader
       {
         test: /\.js$/,
         use: {
@@ -157,7 +157,7 @@ module.exports = {
         },
       },
 
-      // 启用分离样式第二步
+      // * 启用分离样式第二步
       {
         test: /\.css$/,
         use: [
@@ -171,10 +171,16 @@ module.exports = {
         ]
       },
 
-      // sass-loader
+      // * sass-loader
+      // source map只能单独添加
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        // use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { sourceMap: true } },
+          { loader: 'sass-loader', options: { sourceMap: true } },
+        ]
       },
     ]
   },
