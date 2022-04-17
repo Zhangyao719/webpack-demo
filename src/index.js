@@ -12,6 +12,9 @@ import png from './assets/images/star.png'
 // mini-css-extract-plugins
 import './page1';
 
+// sass-loader
+import './style/h1.scss'
+
 add()
 
 document.write(headerHtml)
