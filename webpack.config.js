@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
+const utils = require('./build/utils');
 
 module.exports = {
   /**
@@ -115,7 +116,7 @@ module.exports = {
       },
 
       /**
-       *  * file-loader
+       *  * file-loader (url-loader替代)
        * * 可以在js中加载png|jpg|jpeg|gif图片资源
        */
       // {
@@ -157,37 +158,48 @@ module.exports = {
         },
       },
 
-      // * 启用分离样式第二步
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            },
-          },
-          'css-loader',
-        ]
-      },
+      // * 启用分离样式第二步 (已整合进utils)
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     {
+      //       loader: MiniCssExtractPlugin.loader,
+      //       options: {
+      //         publicPath: '../'
+      //       },
+      //     },
+      //     'css-loader',
+      //   ]
+      // },
 
-      // * sass-loader
+      // * sass-loader (已整合进utils)
       // source map只能单独添加
-      {
-        test: /\.scss$/,
-        // use: ['style-loader', 'css-loader', 'sass-loader'],
-        use: [
-          'style-loader',
-          { loader: 'css-loader', options: { sourceMap: true } },
-          { loader: 'sass-loader', options: { sourceMap: true } },
-        ]
-      },
+      // {
+      //   test: /\.scss$/,
+      //   // use: ['style-loader', 'css-loader', 'sass-loader'],
+      //   use: [
+      //     'style-loader',
+      //     { loader: 'css-loader', options: { sourceMap: true } },
+      //     { loader: 'sass-loader', options: { sourceMap: true } },
+      //   ]
+      // },
 
-      // * postcss-loader
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
-      }
+      // * postcss-loader (已整合进utils)
+      // {
+      //   test: /\.css/,
+      //   use: ['style-loader', 'css-loader', 'postcss-loader'],
+      // }
+
+      // ...utils.styleLoaders({
+      //   sourceMap: true,
+      //   usePostCSS: true,
+      //   extract: true,
+      // })
+      ...utils.styleLoaders({
+        sourceMap: true,
+        usePostCSS: true,
+        extract: true,
+      })
     ]
   },
 
