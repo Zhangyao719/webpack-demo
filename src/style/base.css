@@ -58,3 +58,7 @@ input {
 button {
   cursor: pointer
 }
+
+.container {
+  display: grid;
+}
