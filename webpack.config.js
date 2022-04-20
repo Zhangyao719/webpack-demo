@@ -182,6 +182,12 @@ module.exports = {
           { loader: 'sass-loader', options: { sourceMap: true } },
         ]
       },
+
+      // * postcss-loader
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      }
     ]
   },
 

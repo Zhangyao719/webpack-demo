@@ -28,6 +28,7 @@
     "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
-    "force-strict-loader": "file:../force-strict-loader"
+    "force-strict-loader": "file:../force-strict-loader",
+    "postcss-loader": "^2.0.8"
   }
 }
