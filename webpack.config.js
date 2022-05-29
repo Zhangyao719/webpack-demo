@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
-const utils = require('./build/utils');
+const { styleLoaders } = require('./build/style-loaders');
 
 module.exports = {
   /**
@@ -158,7 +158,7 @@ module.exports = {
         },
       },
 
-      // * 启用分离样式第二步 (已整合进utils)
+      // * 启用分离样式第二步 (已整合进 build/style-loader)
       // {
       //   test: /\.css$/,
       //   use: [
@@ -172,7 +172,7 @@ module.exports = {
       //   ]
       // },
 
-      // * sass-loader (已整合进utils)
+      // * sass-loader (已整合进 build/style-loader)
       // source map只能单独添加
       // {
       //   test: /\.scss$/,
@@ -184,7 +184,7 @@ module.exports = {
       //   ]
       // },
 
-      // * postcss-loader (已整合进utils)
+      // * postcss-loader (已整合进 build/style-loader)
       // {
       //   test: /\.css/,
       //   use: ['style-loader', 'css-loader', 'postcss-loader'],
@@ -195,7 +195,7 @@ module.exports = {
       //   usePostCSS: true,
       //   extract: true,
       // })
-      ...utils.styleLoaders({
+      ...styleLoaders({
         sourceMap: true,
         usePostCSS: true,
         extract: true,
