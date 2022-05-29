@@ -1,5 +1,5 @@
 // css(style)-loader
-import add from './add-content.js'
+import add from './modules/add-content.js'
 import './style/base.css'
 
 // html-loader
@@ -10,7 +10,7 @@ import gif from './assets/images/read.gif'
 import png from './assets/images/star.png'
 
 // mini-css-extract-plugins
-import './page1';
+import './modules/page1.js';
 
 // sass-loader
 import './style/h1.scss'
