@@ -15,6 +15,9 @@ import './modules/page1.js';
 // sass-loader
 import './style/h1.scss'
 
+// SplitChunks
+import './modules/foo.js';
+
 add()
 
 document.write(headerHtml)

@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
 const { styleLoaders } = require('./build/style-loaders');
+const { splitChunks } = require('./build/split-chunks');
 
 module.exports = {
   /**
@@ -213,5 +214,9 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     })
-  ]
+  ],
+
+  optimization: {
+    splitChunks
+  }
 }
