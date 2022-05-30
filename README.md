@@ -1171,9 +1171,9 @@ tips: Webpack v4以上使用的插件为`SplitChunksPlugin`，以前使用的`Co
 
 ### 3.动态导入 (懒加载)
 
-webpack4默认是**允许import语法动态导入**的，但是**需要babel的插件支持**，最新版babel的插件包为：`@babel/plugin-syntax-dynamic-import`，以前老版本是`babel-XXX`开头，已经无法使用，需要注意
+webpack4默认是**允许import语法动态导入**的，但是**需要babel的插件支持**，最新版babel的插件包为：`@babel/plugin-syntax-dynamic-import`，以前老版本是`babel-XXX`开头，已经无法使用，需要注意。
 
-动态导入最大的好处是实现了懒加载，用到哪个模块才会加载哪个模块，可以提高SPA应用程序的首屏加载速度，Vue、React、Angular框架的路由懒加载原理一样
+动态导入最大的好处是实现了懒加载，当模块数量过多、资源体积过大时，可以把一些暂时使用不到的模块延时加载。使页面初次渲染时用户下载的资源尽可能小，后续模块等到恰当的时机再去触发加载。可以提高SPA应用程序的**首屏加载速度**，Vue、React、Angular框架的路由懒加载原理一样。这种方法也叫做**按需加载**。
 
 1. 安装babel插件
 

@@ -23,7 +23,8 @@ module.exports = {
     // filename: 'bundle.js',
     filename: '[name].js',
     path: path.join(__dirname, '/dist'),
-    publicPath: './public/',
+    publicPath: '/public/',
+    chunkFilename: '[name].js', // 指定异步chunk文件名
   },
 
 
