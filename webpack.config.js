@@ -1,8 +1,8 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
-const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { devServer } = require('./build/dev-server')
-const { styleLoaders } = require('./build/style-loaders');
+const styleLoader = require('./build/style-loader')
 const { splitChunks } = require('./build/split-chunks');
 
 module.exports = {
@@ -26,6 +26,7 @@ module.exports = {
     path: path.join(__dirname, '/dist'),
     publicPath: '/public/',
     chunkFilename: '[name].js', // 指定异步chunk文件名
+    globalObject: 'this',
   },
 
 
@@ -146,48 +147,8 @@ module.exports = {
         },
       },
 
-      // * 启用分离样式第二步 (已整合进 build/style-loader)
-      // {
-      //   test: /\.css$/,
-      //   use: [
-      //     {
-      //       loader: MiniCssExtractPlugin.loader,
-      //       options: {
-      //         publicPath: '../'
-      //       },
-      //     },
-      //     'css-loader',
-      //   ]
-      // },
-
-      // * sass-loader (已整合进 build/style-loader)
-      // source map只能单独添加
-      // {
-      //   test: /\.scss$/,
-      //   // use: ['style-loader', 'css-loader', 'sass-loader'],
-      //   use: [
-      //     'style-loader',
-      //     { loader: 'css-loader', options: { sourceMap: true } },
-      //     { loader: 'sass-loader', options: { sourceMap: true } },
-      //   ]
-      // },
-
-      // * postcss-loader (已整合进 build/style-loader)
-      // {
-      //   test: /\.css/,
-      //   use: ['style-loader', 'css-loader', 'postcss-loader'],
-      // }
-
-      // ...utils.styleLoaders({
-      //   sourceMap: true,
-      //   usePostCSS: true,
-      //   extract: true,
-      // })
-      ...styleLoaders({
-        sourceMap: true,
-        usePostCSS: true,
-        extract: true,
-      })
+      // * 样式相关（sass-loader, css-loader, postCSS，样式分离，）
+      ...styleLoader,
     ]
   },
 

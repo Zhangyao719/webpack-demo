@@ -9,14 +9,16 @@ import headerHtml from './html/header.html'
 import gif from './assets/images/read.gif'
 import png from './assets/images/star.png'
 
-// mini-css-extract-plugins
-import './modules/page1.js';
-
 // sass-loader
 import './style/h1.scss'
 
 // SplitChunks
 import './modules/foo.js';
+
+// mini-css-extract-plugins
+import(/* webpackChunkName: '1' */ './modules/page1.js').then(() => {
+    console.log('mini-css-extract-plugins');
+})
 
 add()
 
