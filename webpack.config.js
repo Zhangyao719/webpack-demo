@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 启用分离样式第一步
+const { devServer } = require('./build/dev-server')
 const { styleLoaders } = require('./build/style-loaders');
 const { splitChunks } = require('./build/split-chunks');
 
@@ -31,22 +32,7 @@ module.exports = {
   mode: 'development',
 
   // 配置 webpack-dev-server:
-  devServer: {
-      publicPath: '/dist/',
-      open: true, // 自动打开浏览器
-      port: 8888, // 设置启动时的运行端口
-      hot: true, // 启用热重载的第二步
-    // compress: true,
-
-
-    // webpack5中访问静态资源的配置 必须放在static对象中:
-    // static: {
-    //   *目录:
-    //   directory: path.join(__dirname, 'dist'),
-    //   *可通过`http://localhost:8080${publicPath}/bundle.js` 访问到该静态资源
-    //   publicPath: '/dist',
-    // },
-  },
+  devServer,
 
   /**
    * * 与loader相关的配置都在module对象中
