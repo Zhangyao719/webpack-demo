@@ -16,7 +16,7 @@ import './style/h1.scss'
 import './modules/foo.js';
 
 // mini-css-extract-plugins
-import(/* webpackChunkName: '1' */ './modules/page1.js').then(() => {
+import(/* webpackChunkName: 'page1' */ './modules/page1.js').then(() => {
     console.log('mini-css-extract-plugins');
 })
 
