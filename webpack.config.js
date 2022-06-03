@@ -1,9 +1,9 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { devServer } = require('./build/dev-server')
-const styleLoader = require('./build/style-loader')
-const { splitChunks } = require('./build/split-chunks');
+const { devServer } = require('./build/config/dev-server')
+const styleLoader = require('./build/config/style-loader')
+const { splitChunks } = require('./build/config/split-chunks');
 
 module.exports = {
   /**
