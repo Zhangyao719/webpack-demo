@@ -1,6 +1,8 @@
 const webpack = require("webpack")
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.conf');
 
-module.exports = {
+module.exports = merge(baseConfig, {
     mode: 'production',
 
     plugins: [
@@ -18,4 +20,4 @@ module.exports = {
             })
         })
     ]
-}
+})

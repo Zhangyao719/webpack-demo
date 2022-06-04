@@ -24,5 +24,6 @@ add()
 
 document.write(headerHtml)
 
+console.log('🚀 → env', process.env.NODE_ENV)
 console.log('🚀 → gif', gif)
 console.log('🚀 → png', png)
