@@ -1,5 +1,6 @@
 const webpack = require("webpack")
 const merge = require('webpack-merge');
+const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.base.conf');
 
 module.exports = merge(baseConfig, {
@@ -25,5 +26,18 @@ module.exports = merge(baseConfig, {
                 TYPES: ['foo', 'bar']
             })
         })
-    ]
+    ],
+
+    optimization: {
+        // minimize: true, // 压缩js代码，开启 mode: 'production'后, 不需要人为设置。
+        // 覆盖默认的 minimizer
+        minimizer: [
+            new TerserPlugin({
+                test: /\.js(\?.*)?$/i, // terser 作用范围
+                exclude: /\excludes/, // 默认：undefined，排除某些文件
+                parallel: true, // 默认：false，强烈建议开启，允许使用多个进程进行压缩（可通过传入数字来指定）
+                sourceMap: true, // 默认：false，是否生成 source map (须同时存在devtool配置)
+            })
+        ]
+    }
 })

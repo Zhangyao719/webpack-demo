@@ -23,8 +23,8 @@ module.exports = {
     // filename: '[name]@[hash].js',
     // filename: 'bundle.js',
     filename: '[name].js',
-    path: path.join(__dirname, '/dist'),
-    publicPath: '/dist/',
+    path: path.join(__dirname, '../dist'),
+    publicPath: '../dist/',
     chunkFilename: '[name].js', // 指定异步chunk文件名
     globalObject: 'this',
   },

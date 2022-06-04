@@ -902,7 +902,7 @@ if (module.hot) {
 
 # 第4章 webpack优化
 
-## production模式打包自带优化
+## 生产模式打包自带优化
 
 - **tree shaking**
 
@@ -925,6 +925,24 @@ if (module.hot) {
 - **代码压缩**
 
   所有代码使用UglifyJsPlugin插件进行压缩、混淆
+  
+  ```js
+  const TerserPlugin = require('terser-webpack-plugin');
+      optimization: {
+          // minimize: true, // 默认，开启 mode: 'production'后, 不需要人为设置。
+          // 自定义压缩：
+          minimizer: [
+              new TerserPlugin({
+                  test: /\.js(\?.*)?$/i, // terser 作用范围
+                  exclude: /\excludes/, // 默认：undefined，排除某些文件
+                  parallel: true, // 默认：false，强烈建议开启，允许使用多个进程进行压缩（可通过传入数字来指定）
+                  sourceMap: true, // 默认：false，是否生成 source map (须同时存在devtool配置)
+              })
+          ]
+      }
+  ```
+  
+  
 
 ## css优化
 
