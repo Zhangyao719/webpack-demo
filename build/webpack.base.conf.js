@@ -30,7 +30,7 @@ module.exports = {
   },
 
 
-  mode: 'development',
+    mode: 'development',
 
   // 配置 webpack-dev-server:
   devServer,

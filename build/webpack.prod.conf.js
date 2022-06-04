@@ -5,6 +5,12 @@ const baseConfig = require('./webpack.base.conf');
 module.exports = merge(baseConfig, {
     mode: 'production',
 
+    // 生产环境
+    // 'nosources-sources-map': 看到源码目录结构，但具体内容会被隐藏，仍可在Console中查看源码错误栈或日志的准确行数
+    // 'hidden-sources-map': 不会在 bundle 文件中添加对 map 文件的引用，
+    // 可以利用第三方服务 Sentry错误跟踪平台，将 map 上传
+    devtool: 'nosources-sources-map', 
+
     plugins: [
         // 使用 DefinePlugin 添加环境变量：
         new webpack.DefinePlugin({
