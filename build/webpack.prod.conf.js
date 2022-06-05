@@ -1,11 +1,17 @@
 const webpack = require("webpack")
 const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.conf');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin'); // js 压缩
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const baseConfig = require('./webpack.base.conf');
 
 module.exports = merge(baseConfig, {
     mode: 'production',
+
+    output: {
+        // 更改资源的URL，不使用旧的缓存资源
+        filename: '[name]@[hash].js',
+    },
 
     // 生产环境
     // 'nosources-sources-map': 看到源码目录结构，但具体内容会被隐藏，仍可在Console中查看源码错误栈或日志的准确行数
@@ -14,6 +20,12 @@ module.exports = merge(baseConfig, {
     devtool: 'nosources-sources-map', 
 
     plugins: [
+        // 更改资源的URL，不使用旧的缓存资源
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash:6].css',
+            chunkFilename: '[name].[id].[hash:6].css',
+        }),
+
         // 使用 DefinePlugin 添加环境变量：
         new webpack.DefinePlugin({
             /**
