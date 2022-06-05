@@ -1616,7 +1616,7 @@ output: {
 
 之后每次打包业务代码时，如果有改变，会生成新的hash作为文件名，浏览器就不会使用缓存了，而第三方模块不会重新打包生成新的名字，则会继续使用缓存
 
-## 打包分析
+## 打包监控分析
 
 项目构建完成后，需要通过一些工具对打包后的bundle进行分析，通过分析才能总结出一些经验，官方推荐的分析方法有两步完成：
 
@@ -1636,6 +1636,35 @@ output: {
    - [webpack bundle optimize helper](https://webpack.jakoblind.no/optimize)
 
    其中webpack-bundle-analyzer是一个插件，可以以插件的方式安装到项目中
+   
+   参考资料： https://juejin.cn/post/6844903825216651271
+   
+   ```js
+   // webpack.config.js 文件
+   
+   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+   module.exports={
+     plugins: [
+       new BundleAnalyzerPlugin({
+         analyzerMode: 'disabled', // 不启动展示打包报告的http服务器
+         generateStatsFile: true, // 是否生成stats.json文件
+       }),
+     ]
+   }
+   
+   // 配置package.json 文件
+   {
+    "scripts": {
+       "generateAnalyzFile": "webpack --profile --json > stats.json", // 生成分析文件
+       "analyz": "webpack-bundle-analyzer --port 8888 ./dist/stats.json" // 启动展示打包报告的http服务器
+     }
+   }
+   
+   // 在命令行工具中，先运行npm run generateAnalyzFile命令，
+   // 然后运行npm run analyz命令。 此时就可以看到分析结果了。
+   ```
+   
+   
 
 ## Prefetching和Preloading
 

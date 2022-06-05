@@ -5,6 +5,7 @@ const baseConfig = require('./webpack.base.conf');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin'); // js 压缩
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css 压缩
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(baseConfig, {
     mode: 'production',
@@ -40,6 +41,12 @@ module.exports = merge(baseConfig, {
                 TYPES: ['foo', 'bar']
             })
         }),
+
+        // bundle 体积监控
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled', // 不启动展示打包报告的http服务器
+            generateStatsFile: true, // 是否生成stats.json文件
+        })
     ],
 
     optimization: {
