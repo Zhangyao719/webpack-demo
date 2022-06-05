@@ -1059,7 +1059,7 @@ if (module.hot) {
 
 ### 开启css压缩
 
-需要使用`optimize-css-assets-webpack-plugin`插件来完成css压缩
+压缩前提是使用 `mini-css-extract-plugin`将样式提取出来，接着使用`optimize-css-assets-webpack-plugin`插件来完成css压缩，这个插件本质上使用的是压缩器 **cssnano**。
 
 但是由于配置css压缩时会覆盖掉webpack默认的优化配置，导致JS代码无法压缩，所以还需要手动把JS代码压缩插件导入进来：`terser-webpack-plugin`
 
@@ -1083,11 +1083,24 @@ if (module.hot) {
          new TerserJSPlugin({ // 压缩js
              parallel: true // 使用多进程并发运行以提高构建速度
          }),
-         new OptimizeCSSAssetsPlugin({})], // 压缩css
+         // css 压缩
+         new OptimizeCSSAssetsPlugin({
+             // 生效范围，只压缩匹配到的资源
+             // assetNameRegExp: /\.optimize\.css$/g, 
+             // 压缩处理器 默认为cssnano
+             // cssProcessor: require('cssnano'),
+             // 压缩处理器配置
+             cssProcessorPluginOptions: {
+                 preset: ['default', { discardComments: { removeAll: true } }],
+             },
+             // 是否展示log
+             canPrint: true
+         })
+     ], 
    },
    ```
 
-tips: webpack4默认采用的JS压缩插件为：`uglifyjs-webpack-plugin`，在`mini-css-extract-plugin`上一个版本中还推荐使用该插件，但最新的v0.6中建议使用`teser-webpack-plugin`来完成js代码压缩，具体原因未在官网说明，我们就按照最新版的官方文档来做即可
+tips: webpack4默认采用的JS压缩插件为：`uglifyjs-webpack-plugin`，在`mini-css-extract-plugin`上一个版本中还推荐使用该插件，但最新的v0.6中建议使用`teser-webpack-plugin`来完成js代码压缩，具体原因未在官网说明，我们就按照最新版的官方文档来做即可。
 
 ## js代码分离
 

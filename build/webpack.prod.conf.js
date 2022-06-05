@@ -1,6 +1,7 @@
 const webpack = require("webpack")
 const merge = require('webpack-merge');
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin'); // js 压缩
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const baseConfig = require('./webpack.base.conf');
 
 module.exports = merge(baseConfig, {
@@ -32,12 +33,28 @@ module.exports = merge(baseConfig, {
         // minimize: true, // 压缩js代码，开启 mode: 'production'后, 不需要人为设置。
         // 覆盖默认的 minimizer
         minimizer: [
+            // js 压缩
             new TerserPlugin({
                 test: /\.js(\?.*)?$/i, // terser 作用范围
                 exclude: /\excludes/, // 默认：undefined，排除某些文件
                 parallel: true, // 默认：false，强烈建议开启，允许使用多个进程进行压缩（可通过传入数字来指定）
                 sourceMap: true, // 默认：false，是否生成 source map (须同时存在devtool配置)
+            }),
+
+            // css 压缩
+            // new OptimizeCSSAssetsPlugin({}),
+            new OptimizeCSSAssetsPlugin({
+                // 生效范围，只压缩匹配到的资源
+                // assetNameRegExp: /\.optimize\.css$/g, 
+                // 压缩处理器 默认为cssnano
+                // cssProcessor: require('cssnano'),
+                // 压缩处理器配置
+                cssProcessorPluginOptions: {
+                    preset: ['default', { discardComments: { removeAll: true } }],
+                },
+                // 是否展示log
+                canPrint: true
             })
-        ]
+        ],
     }
 })
