@@ -1,9 +1,10 @@
 const webpack = require("webpack")
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base.conf');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin'); // js 压缩
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css 压缩
 
 module.exports = merge(baseConfig, {
     mode: 'production',
@@ -38,7 +39,7 @@ module.exports = merge(baseConfig, {
             CONSTANTS: JSON.stringify({
                 TYPES: ['foo', 'bar']
             })
-        })
+        }),
     ],
 
     optimization: {

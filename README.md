@@ -247,7 +247,7 @@ module.exports = {
 2. 修改package.json的scripts: `"dev": "webpack-dev-server"`
 3. 运行`npm run dev`
 
-#### html插件
+#### html-webpack-plugin插件
 
 1. 安装html-webpack-plugin插件`npm i html-webpack-plugin -D`
 2. 在`webpack.config.js`中的`plugins`节点下配置

@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { devServer } = require('./config/dev-server')
 const styleLoader = require('./config/style-loader')
 const { splitChunks } = require('./config/split-chunks');
+const HtmlWebpackPlugin = require('html-webpack-plugin') // 输出 动态HTML
 
 module.exports = {
   /**
@@ -161,7 +162,14 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css',
-    })
+    }),
+
+    // 动态输出HTML
+    new HtmlWebpackPlugin({
+        // 传入已有的HTML模板
+        filename: 'index.html', // 默认 index.html
+        template: path.join(__dirname, '../html/template.html'),
+    }),
   ],
 
   optimization: {
