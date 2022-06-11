@@ -1,10 +1,12 @@
 const path = require('path')
 const webpack = require("webpack") // 启用热重载的第一步 - 导入webpack模块
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin') // 输出 动态HTML
+
 const { devServer } = require('./config/dev-server')
 const styleLoader = require('./config/style-loader')
 const { splitChunks } = require('./config/split-chunks');
-const HtmlWebpackPlugin = require('html-webpack-plugin') // 输出 动态HTML
+const HappyPack = require('./config/happypack');
 
 module.exports = {
   /**
@@ -77,21 +79,30 @@ module.exports = {
       //   enforce: 'pre',
       // }
 
-      // * babel-loader
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true, // 启用缓存机制
-            presets: [
-              // 禁止将esModule转为CommonJS(否则会导致tree-shaking特效失效)
-              ['@babel/preset-env', { modules: false }]
-            ]
-          }
-        }
-      },
+      // * babel-loader (放入 happypack 中 ↓)
+      // {
+      //   test: /\.js$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //     options: {
+      //       cacheDirectory: true, // 启用缓存机制
+      //       presets: [
+      //         // 禁止将esModule转为CommonJS(否则会导致tree-shaking特效失效)
+      //         ['@babel/preset-env', { modules: false }]
+      //       ]
+      //     }
+      //   }
+      // },
+
+      // * html-loader 将HTML文件转化为字符串并进行格式化, 让js加载 (放入 happypack 中 ↓)
+      // {
+      //   test: /\.html$/,
+      //   use: 'html-loader',
+      // },
+
+      // happypack 多个 loader 优化
+      ...HappyPack.rules,
 
       // * ts-loader (通过typescript和ts-loader 可以实现代码类型的检查)
       // {
@@ -99,11 +110,6 @@ module.exports = {
       //   use: 'ts-loader',
       // },
 
-      // * html-loader 将HTML文件转化为字符串并进行格式化, 让js加载
-      {
-        test: /\.html$/,
-        use: 'html-loader',
-      },
 
       /**
        *  * file-loader (url-loader替代)
@@ -170,6 +176,9 @@ module.exports = {
         filename: 'index.html', // 默认 index.html
         template: path.join(__dirname, '../html/template.html'),
     }),
+
+    // happypack 多个 loader 优化
+    ...HappyPack.plugins,
   ],
 
   optimization: {
