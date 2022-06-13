@@ -48,6 +48,10 @@ module.exports = {
    * * enforce: 强制指定loader的作用顺序 pre: 所有正常loader之前执行, post: 在所有loader之后执行
    */
   module: {
+    // * noParse 完全不需要 Webpack 进行解析
+    // noParse: /lodash/,
+    noParse: (fullPath) => /lib/.test(fullPath), // 支持完整的路径匹配 例如：/Users/me/app/webpack-no-parse/lib/lodash.js
+
     rules: [
       // * css-loader / style-loader (mini-css-extract-plugin 替代)
       // 写法一:
