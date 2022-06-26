@@ -8,7 +8,8 @@
     "build": "webpack --config=build/webpack.prod.conf.js",
     "dev": "webpack-dev-server --config=build/webpack.dev.conf.js",
     "generateAnalyzFile": "webpack --profile --json > ./dist/stats.json",
-    "analyz": "webpack-bundle-analyzer --port 8001 ./dist/stats.json"
+    "analyz": "webpack-bundle-analyzer --port 8001 ./dist/stats.json",
+    "dll": "webpack --config ./build/webpack.vendor.config.js"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +40,7 @@
   },
   "dependencies": {
     "force-strict-loader": "file:../force-strict-loader",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "moment": "2.27"
   }
 }

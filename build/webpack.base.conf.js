@@ -178,10 +178,15 @@ module.exports = {
     // IgnorePlugin
     // 完全排除一些模块，被排除的模块即便被引用了也不会被打包进资源文件中
     // 使用场景：忽略第三方模块内部依赖的其他模块（比如 Moment.js 中用不到的其他地区的语言）
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^\.\/locale$/, // 匹配资源文件
-      contentRegExp: /moment$/, // 匹配检测目录
-    })
+    // new webpack.IgnorePlugin({
+      // resourceRegExp: /^\.\/locale$/, // 匹配资源文件
+      // contentRegExp: /moment$/, // 匹配检测目录
+    // })
+
+    // vendor 链接到业务代码 （DllReferencePlugin 起到一个索引和链接的作用）
+    new webpack.DllReferencePlugin({
+        manifest: require(path.join(__dirname, '/dll/vendor-manifest.json')),
+    }),
   ],
 
   optimization: {
